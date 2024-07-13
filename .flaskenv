@@ -1,4 +1,0 @@
-FLASK_APP=webbapp.py
-FLASK_RUN_HOST=0.0.0.0
-FLASK_RUN_PORT=8889
-FLASK_ENV=development

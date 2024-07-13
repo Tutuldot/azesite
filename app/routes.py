@@ -8,7 +8,6 @@ import requests
 import os
 import sqlite3
 from werkzeug.utils import secure_filename
-from jsonschema import validate, ValidationError
 
 
 @app.route('/')
