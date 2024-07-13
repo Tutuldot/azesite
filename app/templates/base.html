@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Anthony Estrada">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>{% block title %} {% endblock %} - AZE</title>
+   
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-responsive.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css@3.css') }}">
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    {% block topstyle %}
+    {% endblock %}
+  </head>
+  <body>
+
+<div class="container py-3">
+  <header>
+      <!-- Navigation -->
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+        <span class="fs-4">&nbsp;&nbsp;&nbsp;<b>Anthony Z. Estrada</b></span>
+      </a>
+
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{{ url_for('index') }}">Home</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{{ url_for('services') }}">Services</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{{ url_for('portpolio') }}">Portpolio</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{{ url_for('chat') }}">Chat with me :) AI</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{{ url_for('contact') }}">Contact</a>
+      </nav>
+    </div>
+
+  </header>
+
+  <main>
+    
+    {% block content %} {% endblock %}
+    
+  </main>
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row justify-content-center"> <!-- Add justify-content-center class here -->
+      <div class="col-12 col-md text-center">
+       
+        <small class="d-block mb-3 text-muted">AZE &copy; 2024</small>
+      </div>
+    </div>
+  </footer>
+</div>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+
+{% block jscontentend %} {% endblock %}
+
+    </body>
+</html>
