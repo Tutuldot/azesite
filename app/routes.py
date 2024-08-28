@@ -11,7 +11,6 @@ from werkzeug.utils import secure_filename
 
 
 @app.route('/')
-@app.route('/performance')
 @app.route('/index')
 def index():
 
@@ -20,7 +19,7 @@ def index():
 @app.route('/portpolio')
 def portpolio():
 
-    return render_template('index.html')
+    return render_template('portpolio.html')
 
 @app.route('/chat')
 def chat():
@@ -34,7 +33,7 @@ def contact():
 
 @app.route('/services')
 def services():
-    return render_template('index.html')
+    return render_template('services.html')
 '''
 
 @app.route('/configuration',methods=['GET', 'POST'])
