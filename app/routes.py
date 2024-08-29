@@ -24,7 +24,7 @@ def portpolio():
 @app.route('/chat')
 def chat():
 
-    return render_template('index.html')
+    return render_template('chat.html')
 
 @app.route('/contact')
 def contact():
