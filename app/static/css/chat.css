@@ -91,7 +91,6 @@ video {
     vertical-align: baseline;
 }
 
-
 /* HTML5 display-role reset for older browsers */
 
 article,
@@ -134,7 +133,6 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
 
 /********************************
  Typography Style
@@ -191,7 +189,6 @@ a {
   margin-bottom: 0;
 }
 
-
 /* *******************************
 message-area
 ******************************** */
@@ -209,7 +206,7 @@ message-area
     background-color: #fff;
     border-radius: 0.3rem;
     height: 90vh;
-    overflow: hidden;
+    overflow: hidden; 
     min-height: calc(100% - 1rem);
 }
 
@@ -704,8 +701,6 @@ button:focus {
     display: none;
 }
 
-
-
 @media (max-width: 767px) {
     .chat-icon {
         display: block;
@@ -716,8 +711,8 @@ button:focus {
     }
     .chatbox {
         width: 100%;
-        position: absolute;
-        left: 1000px;
+        position: relative; /* Changed from absolute to relative */
+        left: 0; /* Changed from 1000px to 0 */
         right: 0;
         background: #fff;
         transition: all 0.5s ease;
@@ -763,8 +758,6 @@ button:focus {
         border-bottom-left-radius: 6px;
     }
 }
-
-
 
 .custom-thumbnail {
     width: 100px;
