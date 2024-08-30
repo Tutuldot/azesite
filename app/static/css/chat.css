@@ -760,7 +760,6 @@ button:focus {
 }
 
 .custom-thumbnail {
-    width: 100px;
-    height: 100px;
+
     object-fit: cover; /* Ensures the image covers the entire area */
 }
