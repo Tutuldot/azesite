@@ -1,13 +1,51 @@
 from app import app
-from flask import request, jsonify, render_template,redirect, url_for, flash, send_from_directory
+from flask import request, jsonify, render_template,redirect, url_for, flash, send_from_directory, session, make_response
 import json
 import base64
 import random # for removal for dev only
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import os
 import sqlite3
 from werkzeug.utils import secure_filename
+import uuid
+import pickle
+# AI libs
+from langchain_community.chat_models import ChatDeepInfra
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
+os.environ["DEEPINFRA_API_TOKEN"] = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK"
+CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
+
+# messsages placeholder
+info = '''
+Anthony Estrada, a 30-year-old Filipino data engineer and analyst, sat in front of his computer, sipping his morning coffee and staring at the lines of code on his screen. He was working on a project for a major Philippine bank, building a predictive model to forecast credit risk for their clients.
+As he worked, Anthony's mind wandered back to his childhood in the bustling streets of Manila. Growing up, he was always fascinated by numbers and patterns. He spent hours playing with his calculator, creating complex math problems for himself to solve. His parents, both teachers, encouraged his curiosity, gifting him books on programming and statistics.
+After completing his degree in Computer Science from the Jose Rizal University, Anthony landed a job at a small data analytics firm. He quickly proved himself to be a rising star, impressing his colleagues with his attention to detail and creative problem-solving skills.
+But Anthony's true passion was using data to drive social impact. He spent countless hours volunteering for non-profits, helping them analyze and visualize data to inform their policy decisions. His work caught the attention of the Philippine government, who offered him a grant to build a data platform for tracking poverty rates across the country.
+Anthony's project, dubbed "Tala" (meaning "star" in Filipino), used machine learning algorithms to identify areas of high poverty and recommend targeted interventions. The platform was a huge success, earning Anthony recognition from the international data science community.
+Now, as a senior data engineer at a leading fintech company, Anthony was working on some of the most complex data projects in the country. But he never forgot his roots, always looking for ways to apply his skills to make a positive difference in the lives of Filipinos.
+As he finished his coffee, Anthony refocused on his screen, ready to tackle the next challenge in his code. He smiled to himself, knowing that the work he was doing would help shape the future of the Philippines, one data point at a time.
+'''
+
+messages_template = [
+     SystemMessage(
+            content=(
+                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada. here is the information about him {info}"
+                
+            )
+     )
+]
+
+messages = [
+     SystemMessage(
+            content=(
+                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada. here is the information about him {info}"
+                
+            )
+     )
+]
 
 
 @app.route('/')
@@ -23,7 +61,12 @@ def portpolio():
 
 @app.route('/chat')
 def chat():
-
+    if 'user_id' not in session:
+        session['user_id'] = str(uuid.uuid4())  # generate a unique ID
+        print(f"new user: {session['user_id']}")
+    else:
+        print(f"User has returned! {session['user_id']}")
+    
     return render_template('chat.html')
 
 @app.route('/contact')
@@ -34,267 +77,65 @@ def contact():
 @app.route('/services')
 def services():
     return render_template('services.html')
-'''
-
-@app.route('/configuration',methods=['GET', 'POST'])
-def configuration():
-    c_schema = load_schema()
-    json_data = []
-    uploaded_json = None
-    if request.method == 'POST':
-        # Check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            file_content = file.read()
-            uploaded_json = json.loads(file_content.decode('utf-8'))
-            filename = secure_filename(file.filename)
-            
-            try:
-                validate(instance=uploaded_json, schema=c_schema)
-            except ValidationError as e:
-                flash('Invalid Json Format. Please refer to existing uploaded files.')
-                return redirect(request.url)
-            except json.JSONDecodeError:
-                flash('Invalid Json File. Please check content')
-                return redirect(request.url)
-            except Exception as e:
-                flash('Error on uploaded file: {}'.format(str(e)))
-                return redirect(request.url)
-            
-            uploaded_machine = uploaded_json[0]['name']
-
-            uploaded_formats = uploaded_json[0]['files_to_monitor']
-
-            for i in uploaded_formats:
-                check_machine(uploaded_machine,i['type'])
-
-            #file.save(current_path + directory + "/" + filename)
-            flash('File successfully uploaded! {}'.format(uploaded_json[0]['name']))
-            return redirect(url_for('configuration'))
-        else:
-            flash('Allowed file types are .json')
-            return redirect(request.url)
-
-    
-    json_files = [f for f in os.listdir(current_path + directory) if f.endswith('.json')]
-    
-
-    for file_name in json_files:
-        file_path = os.path.join(current_path + directory, file_name)
-        with open(file_path, 'r') as json_file:
-            data = json.load(json_file)
-            json_data.append({'file_name': file_name, 'content': data})
-
-    return render_template('conf_home.html', json_data=json_data, current_path = current_path, uploaded_json = uploaded_json)
-
-@app.route('/delete-config/<string:config_name>', methods=['POST'])
-def delete_config(config_name):
-
-# Ensure the filename is secure and prevent directory traversal attacks
-  
-    filename = secure_filename(config_name)
-    
-    # Construct the full file path
-    file_path = current_path + directory + "/" + filename
-    
-    # Check if the file exists
-    if os.path.exists(file_path):
-        # Delete the file
-        os.remove(file_path)
-        flash('Config file {} successfully deleted'.format(config_name))
-    else:
-        flash('File not found')
-
-    
-    return redirect(url_for('configuration'))
 
 
 
-@app.route('/download/<filename>')
-def download_file(filename):
-  
-    try:
-        return send_from_directory(current_path + directory, filename, as_attachment=True)
-    except FileNotFoundError:
-        abort(404)
+@app.route('/chatx', methods=['POST'])
+def chatx():
+
+    data = request.get_json()  # Use request.form instead of request.get_json()
+    msg = data.get('message')
+    print(f"HUman message: {msg}")
+
+    if msg == None:
+        msg = "Who are you?" 
 
 
-@app.route('/data')
-def data():
+    chat = ChatDeepInfra(model=CHAT_MODEL) 
 
-    result = get_machines_logs()
-    html_table = result.to_html(index=False, classes='table table-striped')
+    add_human_message(msg)
+
+    res = chat.invoke(messages)
+    add_ai_message(res.content)
+    print(res.content)
+    print(type(res))
+
+    # store to session handler
+    # Serialize the SystemMessage objects using pickle
+    messages_pickle = pickle.dumps(messages)
+
+    # Store the serialized messages in a session
+    session['messages'] = messages_pickle
+
+        
    
-
-    return render_template('data.html', html_table = html_table)
-
-@app.route('/settings')
-def settings():
-   
+    response = make_response(jsonify({'message': res.content}))
   
+    print("compleed")
+    return response
+    #print(data)
+    # Process the data
+   # return jsonify({'message': 'Chat message received!'})
 
-    return render_template('setting.html')
+@app.route('/chat2')
+async def chat2():
+  chat = ChatDeepInfra(model=CHAT_MODEL)
+  await chat.agenerate([messages])
 
-@app.route('/categorize', methods=['POST'])
-def categorize():
+@app.route('/chat3')
+def chat3():
+  chat = ChatDeepInfra(
+      streaming=True,
+      verbose=True,
+      callbacks=[StreamingStdOutCallbackHandler()],
+)
+  print(chat.invoke(messages))
 
-    # handling of post data
-    test_type = None
-    message = request.json.get('message')
-    test_type = request.json.get('test_type') # expected value is blank or Yes
-    if not message:
-        return jsonify({"error": "No message provided"}), 400
+def add_ai_message(content):
+    messages.append(AIMessage(content=content))
 
-    if not test_type:
-        test_type = "NA"
-    
-
-
-    #output to api
-    return jsonify({"message": message, "result": test_type})
-
-
-
-# functions here
-
-def get_all_log_count():
-
-    conn = sqlite3.connect('data/database.db')
-    query = "SELECT * FROM machine_log_count"
-    machine_log_count_df = pd.read_sql_query(query, conn)
-    
-    # Close the connection
-    conn.close()
-    return machine_log_count_df
-
-
-def pivot_machines(dff):
-    df_logs = pd.DataFrame(dff, columns=['created', 'machine_name', 'log_count'])
-    df_logs['created'] = pd.to_datetime(df_logs['created'])
-    df_logs['created'] = df_logs['created'].dt.strftime('%b %d')
-    # Pivot the DataFrame to get 'Machine_Name' as columns and 'Date' as rows
-    df_pivoted = df_logs.pivot_table(index='created', columns='machine_name', values='log_count', fill_value=0)
-
-    labels = df_pivoted.index.tolist()
-    machine_names  = df_logs['machine_name'].unique().tolist()
-
-    datasets = []
-    for column in df_pivoted.columns:
-            datasets.append({
-                'label': column,
-                'data': df_pivoted[column].tolist(),
-                'backgroundColor': 'rgba(54, 162, 235, 1)', # Add your colors
-                'borderColor': 'rgba(54, 162, 235, 1)', # Add your colors
-                'borderWidth': 1
-            })
-
-    return labels, datasets, machine_names
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def load_schema(schema_path = SCHEMA_PATH):
-    """Load JSON schema from a file."""
-    with open(schema_path, 'r') as file:
-        schema = json.load(file)
-    return schema
-
-
-def check_machine(m_name,m_type):
-
-    try:
-        # check if exist
-        conn = sqlite3.connect('database.db')
-
-        cursor = conn.cursor()
-        query = "SELECT * FROM machine_activity where machine_name = ?"
-        cursor.execute(query,(m_name,))
-        results = cursor.fetchall()
-
-    
-
-        if len(results) <= 0:
-            cursor.execute("INSERT INTO machine_activity (machine_name, current_work_week, current_date,log_type) VALUES (?, ?, ?, ?)",(m_name, 0,'2024-01-01',m_type))
-
-
-        cursor.close()
-        conn.close()
-
-        return True
-    except Exception as e:
-        return False
+def add_human_message(content):
+    messages.append(HumanMessage(content=content))
 
 
 
-
-def get_machines(m_name = None):
-
-
-    conn = sqlite3.connect('database.db')
-
-    cursor = conn.cursor()
-    query = None
-    if m_name == None:
-        query = "SELECT * FROM machine_activity"
-        cursor.execute(query)
-    else:
-        query = "SELECT * FROM machine_activity where machine_name = ?" 
-        cursor.execute(query,(m_name,))
-    
-  
-    results = cursor.fetchall()
-
-    
-
-
-    cursor.close()
-    conn.close()
-
-    return results
-
-
-
-def get_machines_logs(m_name = None, start_date = None, end_date = None):
-
-
-    conn = sqlite3.connect(current_path + "/data/database.db" )
-
-    cursor = conn.cursor()
-    query = None
-    if m_name == None:
-        if start_date == None:
-            query = "SELECT * FROM machine_log_count"
-            cursor.execute(query)
-        else:
-            query = "SELECT * FROM machine_log_count where created between ? and ?"
-            cursor.execute(query,(start_date,end_date,))
-
-    else:
-        query = "SELECT * FROM machine_log_count where machine_name = ?" 
-        cursor.execute(query,(m_name,))
-    
-  
-    results = cursor.fetchall()
-
-    
-
-
-    cursor.close()
-    conn.close()
-
-    return results
-    
-    
-
-
-'''

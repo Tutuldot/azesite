@@ -1,0 +1,5 @@
+DEEPINFRA_API_KEY=HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK
+DATABASE_HOST=ep-autumn-recipe-a1i2wgsj.ap-southeast-1.pg.koyeb.app
+DATABASE_USER=postgresadm
+DATABASE_PASSWORD=3fnosUd8krVC
+DATABASE_NAME=koyebdb

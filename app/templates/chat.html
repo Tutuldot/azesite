@@ -49,90 +49,22 @@ Performance
                                         </div>
                                     </div>
 
-
+<!-- classes sender, repaly, divider -->
                                     <div class="modal-body">
                                         <div class="msg-body">
-                                            <ul>
+                                            <ul id="chtbox">
                                                 <li class="sender">
-                                                    <p> Hey, Are you there? </p>
-                                                    <span class="time">10:06 am</span>
+                                                    <p> Hey, Im Chesa and ill be your virtual assistant today. What Can I do for you? </p>
+                                                    <!--<span class="time">10:06 am</span>-->
                                                 </li>
-                                               
+                                               <!--
                                                 <li class="repaly">
                                                     <p>yes!</p>
                                                     <span class="time">10:20 am</span>
                                                 </li>
-                                    
-                                                <li>
-                                                    <div class="divider">
-                                                        <h6>Today</h6>
-                                                    </div>
-                                                </li>
-
+                                    -->
                                             
-                                                <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li>
-
-                                                <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li> <li class="repaly">
-                                                    <p>yes... on it</p>
-                                                    <span class="time">junt now</span>
-                                                </li>
-                                                
-                                               
-
+                                       
                                             </ul>
                                         </div>
                                     </div>
@@ -140,9 +72,9 @@ Performance
 
                                     <div class="send-box">
                                         <form action="">
-                                            <input type="text" class="form-control" aria-label="message…" placeholder="Write message…">
+                                            <input type="text" id="humanMessage" name="humanMessage" class="form-control" aria-label="message…" placeholder="Write message…">
 
-                                            <button type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button>
+                                            <button id="send-button" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button>
                                         </form>
 
                                         
@@ -163,7 +95,7 @@ Performance
     <!-- char-area -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 {% endblock %}
 
 
