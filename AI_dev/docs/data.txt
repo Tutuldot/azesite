@@ -1,0 +1,107 @@
+Resume:
+
+Name: Anthony Estrada
+Recent Position: Senior Engineer – Data Analytics
+
+Contacts: Mobile: +639053909968 email: antzestrada@outlook.com
+
+Links 
+ 
+Linkedin: https://linkedin.com/in/esthony/
+Github:  https://github.com/Tutuldot/
+Website: https://azeio.koyeb.app
+
+
+
+Skill
+
+Programming
+C#, Python, Java, Javascript, Typscript, SQL, PLSQL
+
+Expertise:
+ETL, ELT, Data Migration, Data Warehouse, Data Lake, Data Analytics, Reporting, AI, NLP
+
+Libraries and Tools
+
+Pandas, Jupyter, PowerBI, Azure, AWS Bedrock, Dockers, Synapse, Databricks, Data Factory, Fabric, Talend, SSIS, SSRS, Langchain, Spacy
+
+Certifications and Badge:
+
+Microsoft Fabric Skills
+Microsoft – Jun 2024
+
+Azure Data Fundamentals
+Microsoft – May 2024
+
+Google Advance Data Analytics
+Google – August 2023
+
+
+School Attended:
+
+Jose Rizal University
+BS in Information Technology 2005-2009
+
+-	Graduated with an award of Best in Information System. Created an end-to-end information system for Philippine National Police to track and encode crimes. Aside the applications ability to encode data and produce report. The application can produce cartographic sketch for easier finding of potential suspect. The application also has a business intelligence capabilities which makes getting actionable insights more easier. The application where created using Flash (for cartographic sketch and BI features), C# and ASP.net for the application and Crystal report for the report.  Mysql for the backend.
+
+Latest Projects
+
+Apache Airflow Implementation
+-	Implemented at STMicroelectronics from March 2024 to June 2024. This solved data extractions issues and untraceable ETL jobs. Along side with this project, I also led the conversion of old ETL and data extraction jobs created with Shell Script, Bash Script and Talend to Python. With this project I’ve worked relational databases like Oracle and MariaDB
+
+Message Categorizer with alerts
+-	Implemented at OTaxi from June 2024 to July 2024. OTaxi is the number 1 taxi company at Oman. This increased the ability of the company to act faster whenever there is a customer message via email, Whatsapp and google play comment that has a high change to be a complain. With this tool I’ve used the following tools and technologies: for ETL I use Python for getting data from different sources such as postgres database and accessing some API gateway of the company for Whatsapp data and google data. I use LLAMA 2 chat model for Large language model and langchain for chat framework. The app is deployed on ubuntu based linux instance on the cloud provided by OTAXI 
+
+Tiktok Shop ETL
+-	This project completed to a client at Upwork started December 2023 to March 2024. The client is facing an issue to compute its sales from tiktok due to tiktok inventory system doesn’t have feature for  value of acquisition cost input and not possible to incorporate to their existing inventory system. To solve this problem, I created an ETL solution to download the data from Tiktok REST API to the clients Inventory system database (Mysql). I use Python for this solution. The data from tiktok is downloaded via API and dumped to clients Mysql Database on a regular basis and on-demand. Tiktok is using a JSON Web tokens like security.  
+
+Microsoft Fabric Implementation
+-	After implementing a self service solution at STMicroelectronics using Power BI, Power BI Dataflow, Power BI Gateway, and some on-premise databases like Oracle and MariaDB (year Dec 2022 to June 2023) , Staring December 2023 and still on-going the company decided to use Microsoft Fabric to serve reporting and analytics solution. I led this project with the goal to provide single reporting platform for business users, data analyst and data scientist. On data engineering perspective, I designed data warehouse using medallion architecture for the data. It gets data from on-premise Oracle and MariaDB servers. Also designed a lakehouse that is mostly used by data scientist and analysts. For the ETL I maximize the use of Fabric Data Factory and Synapse.  
+
+Dashboard and Reporting Project
+
+
+
+
+
+
+
+
+
+
+
+Work Experience:
+
+STMicroelectronics | Senior Engineer – Data Science and Analytics
+Nov 2022 – Present | Manufacturing Industry | Laguna, Philippines
+•	Researched and produced solution to help discover Equipment usage costs savings of over 200,000 USD and improved equipment efficiency tracking
+•	Collaborated and engineered 2 new software products using Python to  help monitoring of machine logs, validate data and anomaly detection
+•	Independently improved major bottlenecks in algorithm and metric processing of Oracle MES Server by decreasing run time by 60% to 90%
+•	Implemented self service reporting solution that increased productivity of every teams working with data  
+•	Manage data engineering team with 5 members in implementing data solutions
+HIGHLIGHTED PROJECTS: 
+	Overall Equipment Efficiency Report                                                                    
+	Outlined a new data warehouse and ETL to meet business requirements
+	Automated external reporting and alert system 
+	Developed algorithms to detect inefficient equipment across 5000 machines
+	Self Service Reporting Solution
+	 Designed a data warehouse system implementing Medallion Architecture
+	 Designed MariaDB database and python system to manage six algorithms
+	 Automated external reporting and alert system to provide an actionable list of equipment to monitor  
+Asurion Hong Kong LTD | Business Intelligence Lead 3
+Nov 2016 – Nov 2022 | Manufacturing Industry | Laguna, Philippines
+•	Successfully lead and completed 3 big data and platform migration.
+•	Engineered new software products using Python and C# to that improved the way of working and productivity of supply chain and production departments
+•	Implemented data warehouse for reporting solutions
+•	Established development standards for SQL, PowerBI and Data Warehouse
+
+Nityo Infotech | IT Consultant
+Dec 2015 – Nov 2016 | Manufacturing | Manila, Philippines
+•	May 2016 – Nov 2016: Deployed at Asurion Hong Kong LTD as Business Intelligence developer. Handled end-to-end development of reports
+•	Dec 2012 – May 2016: Deployed at Sun Power Corporation to handle migration for MES reports
+
+Isuzu Automotive Dealership Inc | System Analyst / Programmer
+Sept 2012 – Dec 2015 | Sales & Finance | Manila, Philippines
+•	Completed the data migration project to consolidate 3 different ERP System
+•	Independently improved major bottlenecks and eliminate database lockup in MS SQL Server by implementing data warehouse and data purging that significantly increases performance. Eliminated transactions loses and downtime cost of 100,000 USD yearly.
+•	Lead the conversation of current ERP system from window based to web based application. 

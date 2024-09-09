@@ -1,4 +1,4 @@
-from app import app
+from. import app, db
 from flask import request, jsonify, render_template,redirect, url_for, flash, send_from_directory, session, make_response
 import json
 import base64
@@ -14,6 +14,8 @@ import pickle
 from langchain_community.chat_models import ChatDeepInfra
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
+from app.models import  Pages
 
 os.environ["DEEPINFRA_API_TOKEN"] = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK"
 CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
@@ -51,6 +53,10 @@ messages = [
 @app.route('/')
 @app.route('/index')
 def index():
+    pages = Pages.query.all()
+    for page in pages:
+        print(page.title, page.content)
+    
 
     return render_template('index.html')
 
