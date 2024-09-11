@@ -1,12 +1,14 @@
 import os 
 import psycopg2 
 import numpy as np
-from langchain.text_splitter import CharacterTextSplitter 
+from langchain.text_splitter import CharacterTextSplitter , RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader 
 from langchain_community.embeddings import DeepInfraEmbeddings
 from langchain.vectorstores.pgvector import PGVector
 
 from langchain_core.documents import Document
+from openai import OpenAI
+
 
 
 os.environ["DEEPINFRA_API_TOKEN"] = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK"
@@ -20,7 +22,7 @@ print(f"Current File path: {file_path}")
 loader = TextLoader(file_path) 
 documents = loader.load()
 
-text_splitter = CharacterTextSplitter(chunk_size=250, chunk_overlap=10) 
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=230, chunk_overlap=10) 
 texts = text_splitter.split_documents(documents)
 
 print("\n --- Document Chunks Information ---") 
@@ -29,27 +31,13 @@ print(f"\n Number of chucks docs: {len(texts)}")
 print("\n --- End of Chunks Information ---")
 
 
-final_docs = []
-i = 1
-for text in texts:
-
-    if i <= 1:
-        final_docs.append(Document(
-            page_content=text.page_content
-        ))
-    i = i + 1
 
 
-
-    
-
-print(f"Final Docs Length: {len(final_docs)}")
 #embedding
 embeddings = DeepInfraEmbeddings( model_id="sentence-transformers/clip-ViT-B-32", deepinfra_api_token = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK")
 
 db_config = { "dbname": "resume", "user": "postgresadm", "password": "3fnosUd8krVC", "host": "ep-autumn-recipe-a1i2wgsj.ap-southeast-1.pg.koyeb.app", "port": 5432 }
 
-#document_result = embeddings.embed_documents(docs[0].page_content)
 
 
 CONNECTION_STRING = "postgresql+psycopg2://postgresadm:3fnosUd8krVC@ep-autumn-recipe-a1i2wgsj.ap-southeast-1.pg.koyeb.app:5432/resume"
@@ -67,17 +55,27 @@ docs2 = [
     )
 ]
 '''
-def embedding_function(doc):
-    return embeddings.embed_documents([doc])[0]
 '''
+def embedding_function(input):
+    response = openai.embeddings.create(
+    model="BAAI/bge-large-en-v1.5",
+    input=input,
+    encoding_format="float"
+    )
+    return response['data'][0]['embedding']
+
+document_result = embedding_function(texts[5].page_content)
+
+
+
 vector = PGVector(
     collection_name="RESUME_EMBEDDING_AZE",
     connection_string=CONNECTION_STRING,
     use_jsonb=True,
     embedding_function=embedding_function
 )
-'''
 
+'''
 #new_document_embeddings = embeddings.embed_documents(texts[0].page_content)
 
 
@@ -85,29 +83,32 @@ vector = PGVector(
 embeddings = DeepInfraEmbeddings( model_id="sentence-transformers/clip-ViT-B-32")
 
 
-vector = PGVector(
+vector = PGVector.from_documents(
     embedding=embeddings,
+    documents = [],
     collection_name="RESUME_EMBEDDING_AZE",
     connection_string=CONNECTION_STRING,
     use_jsonb=True,
 )
 
 
+
 i = 1
 
 for text in texts:
+
+    try: 
+
+        xxx = [Document(page_content=text.page_content,metadata={"id": i})]
+        vector.add_documents(xxx,ids=[doc.metadata["id"] for doc in xxx])
+        print(f"done item no: {i}")
+
+    except Exception as e:
+        print(f"error item no: {i}  {text.page_content[:10]}")
    
-    if i > 1:
-        print(f"\n Embedding item no: {i} \n {text.page_content[:10]}")
-        xxx = []
-        xxx.append(Document(
-                page_content=text.page_content
-            ))
-
-
-        vector.add_documents(final_docs)
-    else:
-        print(f"Skipped: {i}")
+   
+   
+  
     i = i + 1
 
 

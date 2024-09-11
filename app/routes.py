@@ -1,5 +1,5 @@
 from. import app, db
-from flask import request, jsonify, render_template,redirect, url_for, flash, send_from_directory, session, make_response
+from flask import request, jsonify, render_template,redirect, url_for, flash, send_from_directory, session, make_response, flash
 import json
 import base64
 import random # for removal for dev only
@@ -15,7 +15,9 @@ from langchain_community.chat_models import ChatDeepInfra
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
-from app.models import  Pages
+
+
+from app.models import  Pages, Messages as DBMessage
 
 os.environ["DEEPINFRA_API_TOKEN"] = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK"
 CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
@@ -29,12 +31,15 @@ But Anthony's true passion was using data to drive social impact. He spent count
 Anthony's project, dubbed "Tala" (meaning "star" in Filipino), used machine learning algorithms to identify areas of high poverty and recommend targeted interventions. The platform was a huge success, earning Anthony recognition from the international data science community.
 Now, as a senior data engineer at a leading fintech company, Anthony was working on some of the most complex data projects in the country. But he never forgot his roots, always looking for ways to apply his skills to make a positive difference in the lives of Filipinos.
 As he finished his coffee, Anthony refocused on his screen, ready to tackle the next challenge in his code. He smiled to himself, knowing that the work he was doing would help shape the future of the Philippines, one data point at a time.
+
 '''
 
 messages_template = [
      SystemMessage(
             content=(
-                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada. here is the information about him {info}"
+                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada.here is the information about him"
+                "if the user wish to contact anthony ask for email and phone number."
+                "you can give his contact information which is antzestrada@outlook.com for email and https://www.linkedin.com/in/esthony/ for linkedin"
                 
             )
      )
@@ -43,8 +48,10 @@ messages_template = [
 messages = [
      SystemMessage(
             content=(
-                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada. here is the information about him {info}"
-                
+               f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada.here is the information about him"
+                "if the user wish to contact anthony ask for email and phone number."
+                "you can give his contact information which is antzestrada@outlook.com for email and https://www.linkedin.com/in/esthony/ for linkedin"
+                 
             )
      )
 ]
@@ -75,10 +82,27 @@ def chat():
     
     return render_template('chat.html')
 
-@app.route('/contact')
+@app.route('/contact',methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        u_name = request.form.get('name')
+        u_email = request.form.get('email')
+        u_subject = request.form.get('subject')
+        u_message = request.form.get('message')
 
-    return render_template('index.html')
+        print(f"name: {u_name}, email: {u_email}, subject: {u_subject}, msg: {u_message}")
+
+        new_message = DBMessage(uname=u_name, email=u_email, subject=u_subject, msg=u_message)
+
+        # Add the instance to the session and commit
+        db.session.add(new_message)
+        db.session.commit()
+        flash('Your message is sent. Will contact you soon..')
+      
+
+        
+
+    return render_template('contact.html')
 
 @app.route('/services')
 def services():

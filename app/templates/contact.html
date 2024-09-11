@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+Contact Me
+{% endblock %}
+
+{% block content %}
+
+<!-- Display flash messages -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="alert alert-info">
+      {% for message in messages %}
+          <p>{{ message }}</p>
+      {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+
+<section>
+    <div class="container mt-5 text-center">
+        <h2>Reach me via Linkedin or email</h2>
+        <div class="mt-4">
+            <a href="https://www.linkedin.com/in/esthony/" target="_blank" class="btn me-3">
+                <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="LinkedIn" class="icon">
+               
+            </a>
+            <Br><br>
+            <a href="mailto:antzestrada@outlook.com" >
+                <img src="{{ url_for('static', filename='img/mail.png') }}" alt="Email" class="icon" width="40" height="40"> 
+               
+            </a>
+            <br>
+            Anthony Estrada
+            <br>
+            antzestrada@outlook.com
+        </div>
+    </div>
+
+</section>
+
+<section>
+  <div class="container mt-5">
+    <h4>Contact me</h4>
+    <br>
+    <br>
+    <form id="contactform" method="post" class="form-validate" action="{{ url_for('contact') }}" >
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input id="u_name" name="name" type="text" class="form-control"  placeholder="Your Name" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input id="u_email" name="email" type="email" class="form-control"  placeholder="Your email" required>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input id="u_subject" name="subject" type="text" class="form-control"  placeholder="Subject" required>
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="u_message" name="message" class="form-control"  rows="3" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</section>
+
+
+
+
+{% endblock %}
+
+
+
+{% block jscontentend %} 
+
+{% endblock %}
