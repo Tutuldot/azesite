@@ -24,33 +24,28 @@ CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
 
 # messsages placeholder
 info = '''
-Anthony Estrada, a 30-year-old Filipino data engineer and analyst, sat in front of his computer, sipping his morning coffee and staring at the lines of code on his screen. He was working on a project for a major Philippine bank, building a predictive model to forecast credit risk for their clients.
-As he worked, Anthony's mind wandered back to his childhood in the bustling streets of Manila. Growing up, he was always fascinated by numbers and patterns. He spent hours playing with his calculator, creating complex math problems for himself to solve. His parents, both teachers, encouraged his curiosity, gifting him books on programming and statistics.
-After completing his degree in Computer Science from the Jose Rizal University, Anthony landed a job at a small data analytics firm. He quickly proved himself to be a rising star, impressing his colleagues with his attention to detail and creative problem-solving skills.
-But Anthony's true passion was using data to drive social impact. He spent countless hours volunteering for non-profits, helping them analyze and visualize data to inform their policy decisions. His work caught the attention of the Philippine government, who offered him a grant to build a data platform for tracking poverty rates across the country.
-Anthony's project, dubbed "Tala" (meaning "star" in Filipino), used machine learning algorithms to identify areas of high poverty and recommend targeted interventions. The platform was a huge success, earning Anthony recognition from the international data science community.
-Now, as a senior data engineer at a leading fintech company, Anthony was working on some of the most complex data projects in the country. But he never forgot his roots, always looking for ways to apply his skills to make a positive difference in the lives of Filipinos.
-As he finished his coffee, Anthony refocused on his screen, ready to tackle the next challenge in his code. He smiled to himself, knowing that the work he was doing would help shape the future of the Philippines, one data point at a time.
-
+Anthony Estrada, A Filipino data engineer and analyst. Graduated at Jose Rizal University on year 2009. He has 12 years working experience in I.T industry. He started his career as Software engineer creating applications using
+C#, ASP.net, PHP, Javascript and Python. He design applications using advance design patters like MVC. His journey in data engineering and analytics started when he is working at 
+Isuzu Automotive dealership (2012 - 2015). After completing data related projects like data migration (Data Centralization, SSIS, MSSQL), data warehouse creation (SSIS and MS SQL)
+and implementing business intelligence solution (QLIKView) he decided to more focused on that area. On Year 2016, He joined Asurion as Business Intelligence Developer. Started as 
+contractor then after six months got absorbed as Team Lead of business intelligence team. The usual things he do at Aurion are create and design data warehouse using medallion concept
+creating end-to-end reporting and analytics solution, perform couching to his colleague  and conduct training to other site and department in using Power BI. He also finished 3 big 
+projects at Asurion. This are the reporting platform migration, data warehouse source migration and migration of data warehouse to AWS redshift Mysql. This is where he gain his
+skill in cloud technologies like Azure Synapse, Data Factory, Databricks, Denodo and AWS Red Shift. On Nov 2022, he joined STMicroelectronics as Senior Engineer for Analystics. He 
+got regularized after 3 month after deploying analytic implmenting self service solution using Power BI, Dataflow and Maria DB. He worked with Oracle and Mariadb for databases. 
+Talend and Python Talend. Currently he is implementing Apache Airflor and deploying Microsoft Fabric. He is currently involve in data centralization project for ASIA sites. He continuesly
+data engineering, data science and analytics to ensure he upgrades his skill progresively. He got training for Google Advance Analytics, Microsoft Certification for Azure Data Fundamental
+and Azure Fabric Associate certificate.
 '''
 
-messages_template = [
-     SystemMessage(
-            content=(
-                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada.here is the information about him"
-                "if the user wish to contact anthony ask for email and phone number."
-                "you can give his contact information which is antzestrada@outlook.com for email and https://www.linkedin.com/in/esthony/ for linkedin"
-                
-            )
-     )
-]
+
 
 messages = [
      SystemMessage(
             content=(
-               f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada.here is the information about him"
+               f"You are a helpful assistant named Mars You will only answer questions about Anthony Estrada.here is the information about him {info}"
                 "if the user wish to contact anthony ask for email and phone number."
-                "you can give his contact information which is antzestrada@outlook.com for email and https://www.linkedin.com/in/esthony/ for linkedin"
+                "you can give his contact information which is antzestrada@outlook.com for email and https://www.linkedin.com/in/esthony/ for linkedin. only if they ask"
                  
             )
      )
@@ -60,10 +55,12 @@ messages = [
 @app.route('/')
 @app.route('/index')
 def index():
+
+    '''
     pages = Pages.query.all()
     for page in pages:
         print(page.title, page.content)
-    
+    '''
 
     return render_template('index.html')
 
