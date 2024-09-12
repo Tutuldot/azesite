@@ -58,7 +58,7 @@ prompt = ChatPromptTemplate.from_messages(
 )
 
 
-
+'''
 query = "freelancer at OTAXI?"
 similar = vector.similarity_search_with_score(query, k=5)
 
@@ -70,12 +70,13 @@ for doc in similar:
 
 
 context = "\n".join([doc[0].page_content for doc in similar])
-
+'''
 # print(f"related context: {context}")
 
 llm = ChatDeepInfra(model=CHAT_MODEL) 
 
-retriever = vector.as_retriever()
+retriever = vector.as_retriever(search_type="similarity",
+    search_kwargs={"k": 3})
 print("retriever created...")
 '''
 qa_stuff = RetrievalQA.from_chain_type(
