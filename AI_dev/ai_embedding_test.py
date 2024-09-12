@@ -59,14 +59,14 @@ prompt = ChatPromptTemplate.from_messages(
 
 
 
-query = "where can i contact anthony?"
+query = "freelancer at OTAXI?"
 similar = vector.similarity_search_with_score(query, k=5)
-'''
+
 for doc in similar:
     print("xxxxxxxxxxxxxxxxxxxxxxx start")
     print(doc[0].page_content, end="\n\n")
     print("xxxxxxxxxxxxxxxxxxxxxxx end\n")
-'''
+
 
 
 context = "\n".join([doc[0].page_content for doc in similar])
