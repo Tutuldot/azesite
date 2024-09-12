@@ -16,7 +16,7 @@ $(document).ready(function() {
   $('#send-button').on('click', function() {
       var humanMessage = $('#humanMessage').val();
       console.log("to send:" + humanMessage)
-
+      $('#humanMessage').val('');
       $('#chtbox').append(`
         <li class="repaly">
           <p>`+ humanMessage +`</p>

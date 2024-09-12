@@ -36,11 +36,15 @@ vector = PGVector.from_documents(
 )
 
 system_prompt = (
-    "You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada."
+    "You are a funny and helpful assistant named Chesa You will only answer questions about Anthony Estrada."
+    "do not give contact information when not asked"
     "Use the following pieces of retrieved context to answer "
-    "the questions. If you don't know the answer, say that you "
-    "don't know. Use three sentences maximum and keep the "
+    "the questions. If you don't know the answer, try "
+    "to recommend alternatives based on the context."
+    "if you really can find the answer recommend to contact him" 
+    " Use three sentences maximum and keep the "
     "answer concise."
+    ""
     ""
     "\n\n"
     "{context}"
@@ -67,7 +71,7 @@ for doc in similar:
 
 context = "\n".join([doc[0].page_content for doc in similar])
 
-print(f"related context: {context}")
+# print(f"related context: {context}")
 
 llm = ChatDeepInfra(model=CHAT_MODEL) 
 
@@ -94,22 +98,19 @@ question_answer_chain = create_stuff_documents_chain(llm, prompt)
 rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
 
-response = rag_chain.invoke({"input": "who is anthony estrada?"})
-print(response["answer"])
+while True:
+    # Prompt the user for input
+    user_input = input("Please enter a question (or type 'exit' to quit): ")
+    print("\n")
+    print(f"User: {user_input}")
+    # Check if the user wants to exit
+    if user_input.lower() == 'exit':
+        print("Goodbye!")
+        break
 
-print("\n\n")
+    response = rag_chain.invoke({"input": user_input})
+    rsm = response["answer"]
+    print(f"AI Response: {rsm}")
 
+    
 
-response = rag_chain.invoke({"input": "how can i contact him?"})
-print(response["answer"])
-
-print("\n\n")
-
-response = rag_chain.invoke({"input": "do you know where he worked??"})
-print(response["answer"])
-print("\n\n")
-
-response = rag_chain.invoke({"input": "whats you name??"})
-print(response["answer"])
-
-print("\n\n")

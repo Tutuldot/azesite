@@ -22,7 +22,7 @@ print(f"Current File path: {file_path}")
 loader = TextLoader(file_path) 
 documents = loader.load()
 
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=230, chunk_overlap=10) 
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=40) 
 texts = text_splitter.split_documents(documents)
 
 print("\n --- Document Chunks Information ---") 

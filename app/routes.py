@@ -35,7 +35,7 @@ skill in cloud technologies like Azure Synapse, Data Factory, Databricks, Denodo
 got regularized after 3 month after deploying analytic implmenting self service solution using Power BI, Dataflow and Maria DB. He worked with Oracle and Mariadb for databases. 
 Talend and Python Talend. Currently he is implementing Apache Airflor and deploying Microsoft Fabric. He is currently involve in data centralization project for ASIA sites. He continuesly
 data engineering, data science and analytics to ensure he upgrades his skill progresively. He got training for Google Advance Analytics, Microsoft Certification for Azure Data Fundamental
-and Azure Fabric Associate certificate.
+and Azure Fabric Associate certificate. 
 '''
 
 
