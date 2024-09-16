@@ -16,8 +16,16 @@ from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 
-
 from app.models import  Pages, Messages as DBMessage
+import datetime
+
+# Get the current date and time
+now = datetime.datetime.now()
+
+# Format the date
+formatted_date = now.strftime("%B %d, %Y")
+
+
 
 os.environ["DEEPINFRA_API_TOKEN"] = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK"
 #CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
@@ -45,6 +53,7 @@ messages = [
             content=(
                f"You are a helpful assistant named Chesa You will only answer questions about Anthony Estrada.here is the information about him {info}"
                 "if the user wish to contact anthony ask for email and phone number."
+               f"The current date is {formatted_date}. use this as reference for some calculations."
                 "you can give his contact information which is antzestrada@outlook.com for email and https://www.linkedin.com/in/esthony/ for linkedin. only if they ask"
                  
             )
