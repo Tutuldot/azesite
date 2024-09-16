@@ -433,7 +433,7 @@ a.add img {
     transform: rotate(-37deg);
 }
 
-.msg-body ul li.sender p {
+.msg-body ul li.sender pre {
     color: #000;
     font-size: 14px;
     line-height: 1.5;
@@ -447,7 +447,7 @@ a.add img {
     margin-bottom: 0;
 }
 
-.msg-body ul li.sender p b {
+.msg-body ul li.sender pre b {
     display: block;
     color: #180660;
     font-size: 14px;

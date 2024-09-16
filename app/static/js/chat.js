@@ -20,7 +20,7 @@ $(document).ready(function() {
       $('#humanMessage').focus();
       $('#chtbox').append(`
         <li class="repaly">
-          <p>`+ humanMessage +`</p>
+          <p>`+ humanMessage +`&nbsp;&nbsp;&nbsp;&nbsp;</p>
           
         </li>
       `);
@@ -38,7 +38,7 @@ $(document).ready(function() {
           $('#typingli').hide();
           $('#chtbox').append(`
           <li class="sender">
-            <p>`+ data.message +` &nbsp;&nbsp;</p>
+            <pre class="wrapped-text" style="white-space: pre-wrap; word-wrap: break-word; overflow: hidden; ">`+ data.message +` </pre>
             
           </li>
         `);
