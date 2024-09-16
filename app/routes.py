@@ -20,8 +20,8 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from app.models import  Pages, Messages as DBMessage
 
 os.environ["DEEPINFRA_API_TOKEN"] = "HTj80cPBu4Qaiw80oIUZAs6J9Nzg73XK"
-CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
-
+#CHAT_MODEL = 'meta-llama/Meta-Llama-3-70B-Instruct'
+CHAT_MODEL = 'meta-llama/Meta-Llama-3.1-8B-Instruct'
 # messsages placeholder
 info = '''
 Anthony Estrada, A Filipino data engineer and analyst. Graduated at Jose Rizal University on year 2009. He has 12 years working experience in I.T industry. He started his career as Software engineer creating applications using
